@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <title>LocSent</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block head %}{% endblock %}
+</head>
+
+<body data-theme="light">
+    <div class="page-wrapper">
+        <header class="header glass-header">
+            <div class="container nav-container">
+                <h1 class="logo">LocSent</h1>
+                <nav class="main-nav">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('auth.logout') }}" class="btn btn-secondary">Logout</a>
+                    {% endif %}
+                    <button id="theme-toggle" class="theme-toggle">
+                        <i data-feather="moon"></i>
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <main class="container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <p class="credit">Developed by <strong>Krupal Fataniya</strong></p>
+            <div class="footer-links">
+                <a href="#" id="open-guide-btn">
+                    <i data-feather="help-circle"></i>
+                    <span>How to Use</span>
+                </a>
+                <a href="https://github.com/krupal-036/locsent" target="_blank" rel="noopener noreferrer">
+                    <i data-feather="github"></i>
+                    <span>GitHub Project</span>
+                </a>
+                <a href="https://krupal.vercel.app/" target="_blank" rel="noopener noreferrer">
+                    <i data-feather="globe"></i>
+                    <span>Portfolio</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="guide-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>How to Use LocSent</h2>
+                <button id="close-guide-btn" class="close-btn"><i data-feather="x"></i></button>
+            </div>
+            <div class="modal-body">
+                <h3>For Administrators</h3>
+                <ul>
+                    <li><strong>Live Map:</strong> The main map shows the last known location of all registered users.
+                        Markers update automatically every 30 seconds.</li>
+                    <li><strong>Geofences:</strong> To add or edit a geofence, simply manage the rows in your
+                        `Geofences` database in Notion. The map will reflect these changes.</li>
+                    <li><strong>Control Sign-Up:</strong> In the "Admin Controls" panel, you can enable or disable new
+                        user registration at any time.</li>
+                    <li><strong>Manage Users:</strong> In the "User Management" table:
+                        <ul>
+                            <li>Click <strong>History</strong> to view a user's last 10 location logs.</li>
+                            <li>Click <strong>Export</strong> to download a user's complete history as a CSV, HTML, or
+                                PDF file.</li>
+                            <li>Click <strong>Delete</strong> to permanently remove a user and all their associated
+                                data.</li>
+                        </ul>
+                    </li>
+                </ul>
+                <hr>
+                <h3>For Users</h3>
+                <ul>
+                    <li><strong>Sign Up & Login:</strong> If enabled by the admin, create an account to access your
+                        personal dashboard.</li>
+                    <li><strong>Your Personal Map:</strong> Your dashboard features a map showing your current location
+                        and all the admin-defined geofence zones. Your marker will update periodically.</li>
+                    <li><strong>Send Location Manually:</strong> Click the "Send Current Location" button to immediately
+                        log your coordinates and send them to the admin.</li>
+                    <li><strong>Automatic Tracking:</strong> While you are logged in, your location is also sent
+                        automatically in the background every hour.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+        feather.replace()
+    </script>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>

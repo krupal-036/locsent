@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha26-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header"><h2>Live User Map</h2></div>
+    <div class="card-body"><div id="live-map"></div></div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Admin Controls</h2>
+    </div>
+    <div class="card-body admin-controls">
+        <div class="control-item">
+            <h4>User Sign-Up</h4>
+            <p>
+                Status: 
+                {% if signup_enabled %}
+                    <span class="status-enabled">Enabled</span>
+                {% else %}
+                    <span class="status-disabled">Disabled</span>
+                {% endif %}
+            </p>
+            <form action="{{ url_for('main.toggle_signup') }}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <button type="submit" class="btn {% if signup_enabled %}btn-danger{% else %}btn-success{% endif %}">
+                    {% if signup_enabled %}
+                        Disable Sign-Up
+                    {% else %}
+                        Enable Sign-Up
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-grid">
+    <div class="card">
+        <div class="card-header"><h2>User Management</h2></div>
+        <div class="card-body">
+            <div class="user-list">
+                <table>
+                    <thead>
+                        <tr><th>Username</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ user.username }}</td>
+                            <td class="action-buttons">
+                                <button class="btn btn-primary" onclick="fetchLocationHistory('{{ user.page_id }}', '{{ user.username }}')">History</button>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary">Export</button>
+                                    <div class="dropdown-content">
+                                        <a href="{{ url_for('main.export_logs', user_page_id=user.page_id, username=user.username, export_format='csv') }}">CSV</a>
+                                        <a href="{{ url_for('main.export_logs', user_page_id=user.page_id, username=user.username, export_format='html') }}">HTML</a>
+                                        <a href="{{ url_for('main.export_logs', user_page_id=user.page_id, username=user.username, export_format='pdf') }}">PDF</a>
+                                    </div>
+                                </div>
+                                <form action="{{ url_for('main.delete_user_route', user_page_id=user.page_id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete the user \'{{ user.username }}\'?');">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="location-details-card" class="card hidden">
+        <div class="card-header"><h3>Location History for <span id="details-username"></span></h3></div>
+        <div class="card-body" id="location-details-content">
+            <p class="loading-text">Select a user to view their location data.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+{% endblock %}
