@@ -11,25 +11,11 @@ A modern, role-based web dashboard built with Python and Flask to monitor user G
 ---
 ## ↗️ Live Demo: [locsent.vercel.app](https://locsent.vercel.app)
 
-<table align="center" cellspacing="0" cellpadding="0" style="border: none; border-collapse: collapse; padding: 0; margin: 0; line-height: 0;">
+<table align="center">
   <tr>
-    <td style="border: none; padding: 0; margin: 0;">
-      <img src="https://github.com/user-attachments/assets/6fc70140-622e-4493-8aea-af00265982e0" alt="Screenshot 1" style="width: 100%; display: block; border: none; margin: 0; padding: 0;">
-    </td>
-  </tr>
-  <tr>
-    <td style="border: none; padding: 0; margin: 0;">
-      <img src="https://github.com/user-attachments/assets/4bdf1bf8-2119-41bc-8842-e040caf0c271" alt="Screenshot 2" style="width: 100%; display: block; border: none; margin: 0; padding: 0;">
-    </td>
-  </tr>
-  <tr>
-    <td style="border: none; padding: 0; margin: 0;">
-      <img src="https://github.com/user-attachments/assets/8da47573-30ce-493e-a733-c5a4df9b6840" alt="Screenshot 3" style="width: 100%; display: block; border: none; margin: 0; padding: 0;">
-    </td>
-  </tr>
-  <tr>
-    <td style="border: none; padding: 0; margin: 0;">
-      <img src="https://github.com/user-attachments/assets/0f478794-acac-4ff1-b838-0cd7dfbd21a1" alt="Screenshot 4" style="width: 100%; display: block; border: none; margin: 0; padding: 0;">
+    <td style="border: 2px solid #ccc; border-radius: 10px; padding: 5px;">
+      <img src="https://github.com/user-attachments/assets/e23da6cb-1b4c-4eff-9e93-dcd88935c262" 
+           alt="Long Node Screenshot" width="100%">
     </td>
   </tr>
 </table>
