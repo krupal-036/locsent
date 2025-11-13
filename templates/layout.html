@@ -2,17 +2,54 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- Basic Meta -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>Locsent — Real-Time GPS Tracking Dashboard with Flask & Notion</title>
+    <meta name="google-site-verification" content="TYKBWgeHzdHBlUxN48C0tXZb3UHXQfWV-PfxZSayPrI" />
+    <meta name="title" content="Locsent — Real-Time GPS Tracking Dashboard with Flask & Notion" />
+    <meta name="description"
+        content="Locsent is a modern, role-based GPS tracking dashboard built with Flask. Track live user locations, manage geofences, view history, and export reports — all powered by Notion as a serverless backend." />
+    <meta name="keywords"
+        content="Locsent, GPS tracking, Flask dashboard, Notion API, live location map, real-time coordinates, geofencing, admin dashboard, role-based access, location monitoring, Python web app, Vercel deployment" />
+    <meta name="author" content="Krupal Fataniya" />
+    <meta name="robots" content="index, follow" />
+    <meta name="revisit-after" content="7 days" />
+    <meta name="language" content="English" />
+    <meta name="distribution" content="global" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://locsent.vercel.app/" />
+    <meta property="og:title" content="Locsent — Real-Time GPS Tracking Dashboard with Flask & Notion" />
+    <meta property="og:description"
+        content="Monitor and manage GPS data in real-time with Locsent — a Flask-powered dashboard using Notion as a serverless database. Built for developers, admins, and teams." />
+    <meta property="og:image" content="https://locsent.vercel.app/static/img/locsent-preview.jpg" />
+    <meta property="og:site_name" content="Locsent" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://locsent.vercel.app/" />
+    <meta name="twitter:title" content="Locsent — Real-Time GPS Tracking Dashboard with Flask & Notion" />
+    <meta name="twitter:description"
+        content="A lightweight Flask app to track, manage, and export real-time GPS data with Notion as backend. Live on Vercel." />
+    <meta name="twitter:image" content="https://locsent.vercel.app/static/img/locsent-preview.jpg" />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/favicon-32x32.png') }}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/favicon-16x16.png') }}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/apple-touch-icon.png') }}" />
+    <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}" />
+    <link rel="shortcut icon" href="https://cdn-icons-png.freepik.com/512/4550/4550214.png" type="image/x-icon">
+    <link rel="canonical" href="https://locsent.vercel.app/" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+        rel="stylesheet" />
 
-    <title>LocSent</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+
     {% block head %}{% endblock %}
 </head>
 
