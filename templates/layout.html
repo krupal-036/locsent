@@ -46,7 +46,9 @@
 
     <footer class="footer">
         <div class="container footer-content">
-            <p class="credit">Developed by <strong>Krupal Fataniya</strong></p>
+            <p class="credit">
+                &copy; <span id="year"></span> Developed by <strong>Krupal Fataniya</strong>
+            </p>
             <div class="footer-links">
                 <a href="#" id="open-guide-btn">
                     <i data-feather="help-circle"></i>
@@ -63,6 +65,11 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+
 
     <div id="guide-modal" class="modal-overlay">
         <div class="modal-content">
