@@ -1,10 +1,13 @@
 # **Locsent: GPS Tracking Dashboard**
 
+
 [![Status](https://img.shields.io/badge/Status-Live-brightgreen)](https://locsent.vercel.app/)
 [![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python)](https://www.python.org/)
 [![Flask](https://img.shields.io/badge/Flask-2.x-black.svg)](https://flask.palletsprojects.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Deployment](https://img.shields.io/badge/Deployment-Vercel-blue?logo=vercel)](https://vercel.com/)
+[![SEO](https://img.shields.io/badge/SEO-Optimized-success?logo=google)](https://locsent.vercel.app/)
+
 
 A modern, role-based web dashboard built with Python and Flask to monitor user GPS coordinates in real-time. Locsent provides secure access for admins and users, logs location history, and uniquely utilizes Notion as a powerful, serverless backend.
 
