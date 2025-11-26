@@ -3,33 +3,33 @@
     --primary-light: #5c6ff1;
     --primary-dark: #2d3db8;
     --primary-gradient: linear-gradient(135deg, #3d52d5, #5c6ff1);
-    
+
     --secondary-color: #6c757d;
     --success-color: #198754;
     --danger-color: #dc3545;
     --warning-color-text: #664d03;
     --warning-color-bg: #fff3cd;
     --warning-color-border: #ffc107;
-    
+
     --background-color: #f8f9fa;
     --surface-color: #ffffff;
     --surface-elevated: #f4f7fc;
-    
+
     --text-color: #212529;
     --text-muted: #6c757d;
     --text-light: #adb5bd;
-    
+
     --border-color: #dee2e6;
     --border-radius: 12px;
     --border-radius-sm: 8px;
     --border-radius-lg: 16px;
-    
+
     --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
     --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.15);
-    
+
     --font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --font-size-xs: 0.75rem;
     --font-size-sm: 0.875rem;
@@ -38,14 +38,14 @@
     --font-size-xl: 1.25rem;
     --font-size-2xl: 1.5rem;
     --font-size-3xl: 1.875rem;
-    
+
     --spacing-xs: 0.5rem;
     --spacing-sm: 0.75rem;
     --spacing-md: 1rem;
     --spacing-lg: 1.5rem;
     --spacing-xl: 2rem;
     --spacing-2xl: 3rem;
-    
+
     --transition-speed: 0.3s;
     --transition-fast: 0.2s;
     --transition-slow: 0.4s;
@@ -55,17 +55,17 @@
     --primary-color: #5c6ff1;
     --primary-light: #7d8fff;
     --primary-dark: #3d52d5;
-    
+
     --background-color: #0f172a;
     --surface-color: #1e293b;
     --surface-elevated: #334155;
-    
+
     --text-color: #e2e8f0;
     --text-muted: #94a3b8;
     --text-light: #64748b;
-    
+
     --border-color: #334155;
-    
+
     --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
@@ -115,7 +115,7 @@ main.container {
 }
 
 .header {
-    padding: var(--spacing-md) 0;
+    /* padding: var(--spacing-md) 0; */
     position: sticky;
     top: 0;
     z-index: 100;
@@ -154,7 +154,7 @@ main.container {
 
 .main-nav {
     display: flex;
-    align-items: center;
+    align-items: left;
     gap: var(--spacing-md);
 }
 
@@ -706,6 +706,7 @@ tbody tr:hover {
         opacity: 0;
         transform: translateY(10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -717,6 +718,7 @@ tbody tr:hover {
         opacity: 0;
         transform: translateY(-20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -727,43 +729,44 @@ tbody tr:hover {
     .container {
         padding: 0 var(--spacing-md);
     }
-    
+
     .footer-content {
         flex-direction: column;
         gap: var(--spacing-md);
     }
-    
+
     .dashboard-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .admin-controls {
         flex-direction: column;
         gap: var(--spacing-lg);
     }
-    
+
     .header {
         padding: var(--spacing-sm) 0;
     }
-    
+
     .logo {
         font-size: var(--font-size-xl);
     }
-    
+
     .auth-card {
         padding: var(--spacing-lg);
     }
-    
+
     .card-header,
     .card-body {
         padding: var(--spacing-md);
     }
-    
+
     table {
         font-size: var(--font-size-xs);
     }
-    
-    th, td {
+
+    th,
+    td {
         padding: var(--spacing-sm);
     }
 }
