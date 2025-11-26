@@ -107,3 +107,37 @@ def export_logs(user_page_id, username, export_format):
         return send_file(pdf_buffer, as_attachment=True, download_name=filename, mimetype='application/pdf')
     flash(f"Invalid export format: {export_format}", "danger")
     return redirect(url_for('main.admin_dashboard'))
+
+# @main.route('/api/get_active_users_count')
+# @login_required
+# def get_active_users_count():
+#     users = get_all_users()
+#     return jsonify({'count': len(users)})
+
+# @main.route('/api/get_geofence_count')
+# @login_required
+# def get_geofence_count():
+#     geofences = get_geofences()
+#     return jsonify({'count': len(geofences)})
+
+
+
+# This code in routes.py is CORRECT. No changes needed here.
+
+@main.route('/api/get_active_users_count')
+@login_required
+def get_active_users_count():
+    if not request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return jsonify({'error': 'Forbidden'}), 403
+
+    users = get_all_users()
+    return jsonify({'count': len(users)})
+
+@main.route('/api/get_geofence_count')
+@login_required
+def get_geofence_count():
+    if not request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return jsonify({'error': 'Forbidden'}), 403
+
+    geofences = get_geofences()
+    return jsonify({'count': len(geofences)})

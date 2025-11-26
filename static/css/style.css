@@ -11,30 +11,25 @@
     --warning-color-bg: #fff3cd;
     --warning-color-border: #ffc107;
     
-    /* Background & Surface Colors */
     --background-color: #f8f9fa;
     --surface-color: #ffffff;
     --surface-elevated: #f4f7fc;
     
-    /* Text Colors */
     --text-color: #212529;
     --text-muted: #6c757d;
     --text-light: #adb5bd;
     
-    /* Border & Shadow */
     --border-color: #dee2e6;
     --border-radius: 12px;
     --border-radius-sm: 8px;
     --border-radius-lg: 16px;
     
-    /* Shadows */
     --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
     --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.15);
     
-    /* Typography */
     --font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --font-size-xs: 0.75rem;
     --font-size-sm: 0.875rem;
@@ -44,7 +39,6 @@
     --font-size-2xl: 1.5rem;
     --font-size-3xl: 1.875rem;
     
-    /* Spacing */
     --spacing-xs: 0.5rem;
     --spacing-sm: 0.75rem;
     --spacing-md: 1rem;
@@ -52,13 +46,11 @@
     --spacing-xl: 2rem;
     --spacing-2xl: 3rem;
     
-    /* Transitions */
     --transition-speed: 0.3s;
     --transition-fast: 0.2s;
     --transition-slow: 0.4s;
 }
 
-/* Dark Theme Variables */
 [data-theme="dark"] {
     --primary-color: #5c6ff1;
     --primary-light: #7d8fff;
@@ -81,7 +73,6 @@
     --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.6);
 }
 
-/* Base Styles */
 *,
 *::before,
 *::after {
@@ -105,7 +96,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Layout Structure */
 .page-wrapper {
     display: flex;
     flex-direction: column;
@@ -124,7 +114,6 @@ main.container {
     padding: 0 var(--spacing-lg);
 }
 
-/* Header Styles */
 .header {
     padding: var(--spacing-md) 0;
     position: sticky;
@@ -186,7 +175,6 @@ main.container {
     background-color: var(--surface-elevated);
 }
 
-/* Footer Styles */
 .footer {
     background-color: var(--surface-color);
     padding: var(--spacing-xl) 0;
@@ -238,7 +226,6 @@ main.container {
     height: 18px;
 }
 
-/* Button Styles */
 .btn {
     padding: var(--spacing-sm) var(--spacing-lg);
     border: none;
@@ -328,7 +315,6 @@ main.container {
     font-size: var(--font-size-xs);
 }
 
-/* Authentication Styles */
 .auth-container {
     display: flex;
     justify-content: center;
@@ -361,7 +347,6 @@ main.container {
     margin-bottom: var(--spacing-xl);
 }
 
-/* Form Styles */
 .form-group {
     margin-bottom: var(--spacing-lg);
 }
@@ -410,7 +395,6 @@ main.container {
     text-decoration: underline;
 }
 
-/* Alert Styles */
 .alert {
     padding: var(--spacing-md) var(--spacing-lg);
     margin-bottom: var(--spacing-lg);
@@ -438,7 +422,6 @@ main.container {
     border-color: #badbcc;
 }
 
-/* Status Indicators */
 .status-enabled {
     color: var(--success-color);
     font-weight: 600;
@@ -473,7 +456,6 @@ main.container {
     margin-right: var(--spacing-xs);
 }
 
-/* Card Styles */
 .card {
     background-color: var(--surface-color);
     border-radius: var(--border-radius);
@@ -506,7 +488,6 @@ main.container {
     padding: var(--spacing-lg);
 }
 
-/* Dashboard Grid */
 .dashboard-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -519,7 +500,6 @@ main.container {
     }
 }
 
-/* Admin Controls */
 .admin-controls {
     display: flex;
     gap: var(--spacing-xl);
@@ -539,7 +519,6 @@ main.container {
     font-size: var(--font-size-sm);
 }
 
-/* Table Styles */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -570,7 +549,6 @@ tbody tr:hover {
     background-color: var(--surface-elevated);
 }
 
-/* Action Buttons */
 .action-buttons {
     display: flex;
     flex-wrap: wrap;
@@ -582,7 +560,6 @@ tbody tr:hover {
     margin: 0;
 }
 
-/* Dropdown Styles */
 .dropdown {
     position: relative;
     display: inline-block;
@@ -627,7 +604,6 @@ tbody tr:hover {
     display: block;
 }
 
-/* Map Styles */
 #live-map,
 #user-map {
     width: 100%;
@@ -645,7 +621,6 @@ tbody tr:hover {
     height: 400px;
 }
 
-/* Utility Classes */
 .hidden {
     display: none !important;
 }
@@ -726,7 +701,6 @@ tbody tr:hover {
     border-color: var(--primary-color);
 }
 
-/* Animations */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -749,7 +723,6 @@ tbody tr:hover {
     }
 }
 
-/* Responsive Styles */
 @media (max-width: 768px) {
     .container {
         padding: 0 var(--spacing-md);
@@ -795,7 +768,6 @@ tbody tr:hover {
     }
 }
 
-/* Modal Styles */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -902,7 +874,6 @@ tbody tr:hover {
     margin: var(--spacing-xl) 0;
 }
 
-/* Custom Scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
