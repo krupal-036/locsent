@@ -170,7 +170,7 @@ async function fetchLocationHistory(userPageId, username) {
     const usernameSpan = document.getElementById('details-username');
     detailsCard.classList.remove('hidden');
     usernameSpan.textContent = username;
-    contentDiv.innerHTML = '<p class="loading-text">Fetching location data...</p>';
+    contentDiv.innerHTML = '<p class="loading-text"> <i class="fa-regular fa-hourglass-half"></i> &nbsp; Fetching location data...</p>';
     try {
         const response = await fetch(`/admin/get_location_history/${userPageId}`);
         if (!response.ok) throw new Error('Network response was not ok.');
@@ -180,9 +180,9 @@ async function fetchLocationHistory(userPageId, username) {
             const googleMapsUrl = `https://www.google.com/maps?q=${latest.latitude},${latest.longitude}`;
             let historyHtml = data.map(log => {
                 const mapUrl = `https://www.google.com/maps?q=${log.latitude},${log.longitude}`;
-                return `<li><div class="history-item-details"><span>${new Date(log.timestamp).toLocaleString()}</span><span>Lat: ${log.latitude.toFixed(4)}, Lon: ${log.longitude.toFixed(4)}</span></div><a href="${mapUrl}" target="_blank" class="btn-map">Open Map</a></li>`;
+                return `<li><div class="history-item-details"><span>${new Date(log.timestamp).toLocaleString()}</span><span>Lat: ${log.latitude.toFixed(4)}, Lon: ${log.longitude.toFixed(4)}</span></div><a href="${mapUrl}" target="_blank" class="btn-map">Open Map &nbsp; <i class="fa-solid fa-up-right-from-square"></i></a></li>`;
             }).join('');
-            contentDiv.innerHTML = `<div class="location-info"><p><strong>Latest Coordinates:</strong> ${latest.latitude}, ${latest.longitude}</p><p><strong>IP Address:</strong> ${latest.ip_address}</p><p><strong>Battery Status:</strong> ${latest.battery}</p><a href="${googleMapsUrl}" target="_blank" class="btn btn-secondary">Open Latest in Google Maps</a></div><hr><h4>Location History (Last 10)</h4><ul class="location-history-list">${historyHtml}</ul>`;
+            contentDiv.innerHTML = `<div class="location-info"><p><strong>Latest Coordinates:</strong> ${latest.latitude}, ${latest.longitude}</p><p><strong>IP Address:</strong> ${latest.ip_address}</p><p><strong>Battery Status:</strong> ${latest.battery}</p><a href="${googleMapsUrl}" target="_blank" class="btn btn-secondary">Open Latest in Google Maps &nbsp; <i class="fa-solid fa-location-dot"></i></a></div><hr><h4>Location History (Last 10)</h4><ul class="location-history-list">${historyHtml}</ul>`;
         } else {
             contentDiv.innerHTML = '<p>No location data found for this user.</p>';
         }

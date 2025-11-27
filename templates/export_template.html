@@ -1,23 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Location History for {{ username }}</title>
     <style>
-        body { font-family: sans-serif; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        h1 { text-align: center; }
+        body {
+            font-family: sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        h1 {
+            text-align: center;
+        }
     </style>
 </head>
+
 <body>
     <h1>Location History for {{ username }}</h1>
     <table>
         <thead>
             <tr>
                 {% for key in logs[0].keys() %}
-                    <th>{{ key }}</th>
+                <th>{{ key }}</th>
                 {% endfor %}
             </tr>
         </thead>
@@ -25,11 +45,12 @@
             {% for log in logs %}
             <tr>
                 {% for value in log.values() %}
-                    <td>{{ value }}</td>
+                <td>{{ value }}</td>
                 {% endfor %}
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </body>
+
 </html>
