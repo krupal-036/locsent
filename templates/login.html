@@ -1,24 +1,237 @@
 {% extends "layout.html" %}
 {% block content %}
+<style>
+    .input-wrapper {
+        position: relative;
+    }
+
+    .validation-icon {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    .validation-icon.valid {
+        color: var(--success-color); 
+    }
+
+    .validation-icon.invalid {
+        color: var(--danger-color);
+    }
+
+    .error-message-text {
+        color: var(--danger-color);
+        font-weight: 500;
+        display: block;
+        font-size: var(--font-size-sm);
+        margin-top: var(--spacing-xs);
+    }
+
+    .password-requirements {
+        margin-top: var(--spacing-xs);
+        font-size: var(--font-size-sm);
+    }
+
+    .requirement {
+        display: flex;
+        align-items: center;
+        margin-bottom: var(--spacing-xs);
+        color: var(--text-muted);
+    }
+
+    .requirement.met {
+        color: var(--success-color);
+    }
+</style>
+
 <div class="auth-container">
     <div class="auth-card">
         <h2>Welcome Back</h2>
         <p>Login with your credentials.</p>
-        <form method="POST" action="{{ url_for('auth.login') }}">
-
+        
+        <form id="loginForm" method="POST" action="{{ url_for('auth.login') }}">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
 
             <div class="form-group">
                 <label for="username">Email</label>
-                <input type="email" id="username" name="username" required>
+                <div class="input-wrapper">
+                    <input type="email" id="username" name="username" required>   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                </div>
+                <div id="emailError"></div>
             </div>
+
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+                <div class="input-wrapper">
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div id="passwordError"></div>
+                <div id="passwordRequirements" class="password-requirements" style="display: none;">
+                    <div class="requirement" id="lengthReq">
+                        <span>At least 8 characters</span>
+                    </div>
+                    <div class="requirement" id="caseReq">
+                        <span>Upper and lowercase letters</span>
+                    </div>
+                    <div class="requirement" id="numberReq">
+                        <span>At least one number</span>
+                    </div>
+                    <div class="requirement" id="specialReq">
+                        <span>At least one special character</span>
+                    </div>
+                </div>
             </div>
+
             <button type="submit" class="btn btn-primary btn-block">Login</button>
         </form>
         <p class="auth-switch">Don't have an account? <a href="{{ url_for('auth.signup') }}">Sign Up</a></p>
     </div>
 </div>
+
+<script src="https://unpkg.com/feather-icons"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    feather.replace();
+    
+    const loginForm = document.getElementById('loginForm');
+    const emailInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const emailErrorDiv = document.getElementById('emailError');
+    const passwordErrorDiv = document.getElementById('passwordError');
+    const passwordRequirementsDiv = document.getElementById('passwordRequirements');
+    
+    const lengthReq = document.getElementById('lengthReq');
+    const caseReq = document.getElementById('caseReq');
+    const numberReq = document.getElementById('numberReq');
+    const specialReq = document.getElementById('specialReq');
+
+    function validateEmail(email) {
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
+    function validatePassword(password) {
+        return {
+            length: password.length >= 8,
+            letter: /[a-z]/.test(password) && /[A-Z]/.test(password),
+            number: /\d/.test(password),
+            special: /[!@#$%^&*(),.?":{}|<>]/.test(password)
+        };
+    }
+
+    function updateEmailUI() {
+        const email = emailInput.value;
+        const wrapper = emailInput.parentElement;
+        let icon = wrapper.querySelector('.validation-icon');
+        const isValid = validateEmail(email);
+
+        if (icon) icon.remove();
+        emailErrorDiv.innerHTML = '';
+        emailInput.style.borderColor = '';
+
+        if (email.length > 0) {
+            icon = document.createElement('div');
+            icon.className = `validation-icon ${isValid ? 'valid' : 'invalid'}`;
+            
+            if (isValid) {
+                icon.innerHTML = '<i data-feather="check"></i>';
+            } else {
+                icon.innerHTML = '<i data-feather="x"></i>';
+            }
+            
+            wrapper.appendChild(icon);
+            feather.replace();
+
+            if (!isValid) {
+                emailErrorDiv.innerHTML = '<span class="error-message-text">Please enter a valid email address.</span>';
+                emailInput.style.borderColor = 'var(--danger-color)';
+            }
+        }
+    }
+
+    function updatePasswordUI() {
+        const password = passwordInput.value;
+        const wrapper = passwordInput.parentElement;
+        let icon = wrapper.querySelector('.validation-icon');
+        const validation = validatePassword(password);
+        const allValid = Object.values(validation).every(Boolean);
+
+        if (icon) icon.remove();
+        passwordErrorDiv.innerHTML = '';
+        passwordInput.style.borderColor = '';
+
+        if (password.length > 0) {
+            passwordRequirementsDiv.style.display = 'block';
+            
+            icon = document.createElement('div');
+            icon.className = `validation-icon ${allValid ? 'valid' : 'invalid'}`;
+            
+            if (allValid) {
+                icon.innerHTML = '<i data-feather="check"></i>';
+            } else {
+                icon.innerHTML = '<i data-feather="x"></i>';
+            }
+            
+            wrapper.appendChild(icon);
+            feather.replace();
+
+            updateRequirement(lengthReq, validation.length);
+            updateRequirement(caseReq, validation.letter);
+            updateRequirement(numberReq, validation.number);
+            updateRequirement(specialReq, validation.special);
+
+            if (!allValid) {
+                passwordErrorDiv.innerHTML = '<span class="error-message-text">Password does not meet all requirements.</span>';
+                passwordInput.style.borderColor = 'var(--danger-color)';
+            }
+        } else {
+            passwordRequirementsDiv.style.display = 'none';
+        }
+    }
+
+    function updateRequirement(element, isValid) {
+        if (isValid) {
+            element.classList.remove('unmet');
+            element.classList.add('met');
+        } else {
+            element.classList.remove('met');
+            element.classList.add('unmet');
+        }
+    }
+
+    emailInput.addEventListener('input', updateEmailUI);
+    passwordInput.addEventListener('input', updatePasswordUI);
+
+    loginForm.addEventListener('submit', function(event) {
+        event.preventDefault(); 
+
+        updateEmailUI();
+        updatePasswordUI();
+
+        const email = emailInput.value;
+        const password = passwordInput.value;
+        const isEmailValid = validateEmail(email);
+        const passwordValidation = validatePassword(password);
+        const isPasswordValid = Object.values(passwordValidation).every(Boolean);
+
+        if (isEmailValid && isPasswordValid) {
+            loginForm.submit();
+        } else {
+            if (!isEmailValid) {
+                emailErrorDiv.innerHTML = '<span class="error-message-text">Please enter a valid email address.</span>';
+                emailInput.style.borderColor = 'var(--danger-color)';
+            }
+            
+            if (!isPasswordValid) {
+                passwordErrorDiv.innerHTML = '<span class="error-message-text">Password does not meet all requirements.</span>';
+                passwordInput.style.borderColor = 'var(--danger-color)';
+            }
+        }
+    });
+});
+</script>
 {% endblock %}

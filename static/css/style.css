@@ -895,3 +895,26 @@ tbody tr:hover {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--text-color);
 }
+
+.form-error {
+    display: block;
+    visibility: visible;
+
+    color: var(--danger-color);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+
+    margin-top: var(--spacing-xs);
+    min-height: 1em;
+
+    position: relative;
+    z-index: 10;
+}
+
+.form-group input.input-error {
+    border-color: var(--danger-color);
+}
+
+.form-group input.input-error:focus {
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25);
+}
