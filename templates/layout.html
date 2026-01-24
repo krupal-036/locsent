@@ -56,7 +56,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0px 0;
+            padding-left: var(--spacing-xl);
+            padding-right: var(--spacing-xl);
             position: relative;
         }
 
@@ -215,63 +216,62 @@
 </head>
 
 <body data-theme="light">
-    <div class="page-wrapper">
-        <header class="header glass-header">
-            <nav class="navbar container">
-                <h1 class="logo"> &nbsp; &nbsp; LocSent</h1>
+    <header class="header glass-header">
+        <nav class="navbar">
+            <h1 class="logo"> &nbsp; &nbsp; LocSent</h1>
 
-                <button id="mobile-toggle" class="navbar-toggler">
-                    <i data-feather="menu"></i> &nbsp;
-                </button>
+            <button id="mobile-toggle" class="navbar-toggler">
+                <i data-feather="menu"></i> &nbsp;
+            </button>
 
-                <div id="mainNavbar" class="navbar-menu">
-                    <ul class="navbar-nav">
+            <div id="mainNavbar" class="navbar-menu">
+                <ul class="navbar-nav">
 
-                        <li>
-                            <div class="active-users-counter">
-                                <i data-feather="users"></i> &nbsp;
-                                <span id="active-users-count"> Loading...</span>
-                            </div>
-                        </li>
+                    <li>
+                        <div class="active-users-counter">
+                            <i data-feather="users"></i> &nbsp;
+                            <span id="active-users-count"> Loading...</span>
+                        </div>
+                    </li>
 
-                        <li>
-                            <div class="geofence-counter">
-                                <i data-feather="map-pin"></i> &nbsp;
-                                <span id="geofence-count"> Loading...</span>
-                            </div>
-                        </li>
+                    <li>
+                        <div class="geofence-counter">
+                            <i data-feather="map-pin"></i> &nbsp;
+                            <span id="geofence-count"> Loading...</span>
+                        </div>
+                    </li>
 
-                        {% if current_user.is_authenticated %}
-                        <li>
-                            <a href="{{ url_for('auth.logout') }}" class="btn btn-secondary"> <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
-                        </li>
-                        {% endif %}
+                    {% if current_user.is_authenticated %}
+                    <li>
+                        <a href="{{ url_for('auth.logout') }}" class="btn btn-secondary"> <i
+                                class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+                    </li>
+                    {% endif %}
 
-                        <li>
-                            <button id="theme-toggle" class="theme-toggle">
-                                <i data-feather="moon"></i>
-                            </button>
-                        </li>
+                    <li>
+                        <button id="theme-toggle" class="theme-toggle">
+                            <i data-feather="moon"></i>
+                        </button>
+                    </li>
 
-                    </ul>
-                </div>
-            </nav>
-        </header>
+                </ul>
+            </div>
+        </nav>
+    </header>
 
-        <main class="container">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-            {% for category, message in messages %}
-            <div class="alert alert-{{ category }}">{{ message }}</div>
-            {% endfor %}
-            {% endif %}
-            {% endwith %}
-            {% block content %}{% endblock %}
-        </main>
-    </div>
+    <main class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
 
     <footer class="footer">
-        <div class="container footer-content">
+        <div class="footer-content">
             <p class="credit">
                 &copy; <span id="year"></span> Developed by <strong>Krupal Fataniya</strong>
             </p>

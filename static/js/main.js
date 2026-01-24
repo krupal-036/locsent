@@ -38,10 +38,30 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    const historyModal = document.getElementById('history-modal');
+    const closeHistoryBtn = document.getElementById('close-history-modal');
+
+    if (historyModal && closeHistoryBtn) {
+        closeHistoryBtn.addEventListener('click', () => {
+            historyModal.classList.remove('modal-active');
+        });
+
+        historyModal.addEventListener('click', (e) => {
+            if (e.target === historyModal) {
+                historyModal.classList.remove('modal-active');
+            }
+        });
+    }
+
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    }
 });
 
 let userMap;
 let userMarker;
+
 function initializeUserMap() {
     userMap = L.map('user-map').setView([20, 0], 2);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -52,6 +72,7 @@ function initializeUserMap() {
     updateUserMarker();
     setInterval(updateUserMarker, 20000);
 }
+
 function updateUserMarker() {
     navigator.geolocation.getCurrentPosition(position => {
         const { latitude, longitude } = position.coords;
@@ -66,6 +87,7 @@ function updateUserMarker() {
         console.error("Could not get user location:", error.message);
     }, { enableHighAccuracy: true });
 }
+
 async function sendLocation() {
     const statusEl = document.getElementById('status-message');
     const buttonEl = document.getElementById('send-location-btn');
@@ -114,6 +136,7 @@ async function sendLocation() {
 
 let adminMap;
 let userMarkers = {};
+
 function initializeAdminMap() {
     adminMap = L.map('live-map').setView([20, 0], 2);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -124,6 +147,7 @@ function initializeAdminMap() {
     updateAdminMapMarkers();
     setInterval(updateAdminMapMarkers, 30000);
 }
+
 async function updateAdminMapMarkers() {
     try {
         const response = await fetch('/admin/api/get_all_latest_locations');
@@ -164,25 +188,51 @@ async function drawGeofences(mapInstance) {
         console.error("Geofence Drawing Error:", error);
     }
 }
+
 async function fetchLocationHistory(userPageId, username) {
-    const detailsCard = document.getElementById('location-details-card');
-    const contentDiv = document.getElementById('location-details-content');
-    const usernameSpan = document.getElementById('details-username');
-    detailsCard.classList.remove('hidden');
+    const modal = document.getElementById('history-modal');
+    const contentDiv = document.getElementById('history-modal-body');
+    const usernameSpan = document.getElementById('history-modal-username');
+
+    if (!modal) return;
+
+    modal.classList.add('modal-active');
     usernameSpan.textContent = username;
-    contentDiv.innerHTML = '<p class="loading-text"> <i class="fa-regular fa-hourglass-half"></i> &nbsp; Fetching location data...</p>';
+    contentDiv.innerHTML = '<p class="loading-text"><i class="fa-regular fa-hourglass-half"></i> &nbsp; Fetching location data...</p>';
+
     try {
         const response = await fetch(`/admin/get_location_history/${userPageId}`);
         if (!response.ok) throw new Error('Network response was not ok.');
         const data = await response.json();
+
         if (data.length > 0) {
             const latest = data[0];
             const googleMapsUrl = `https://www.google.com/maps?q=${latest.latitude},${latest.longitude}`;
+
             let historyHtml = data.map(log => {
                 const mapUrl = `https://www.google.com/maps?q=${log.latitude},${log.longitude}`;
-                return `<li><div class="history-item-details"><span>${new Date(log.timestamp).toLocaleString()}</span><span>Lat: ${log.latitude.toFixed(4)}, Lon: ${log.longitude.toFixed(4)}</span></div><a href="${mapUrl}" target="_blank" class="btn-map">Open Map &nbsp; <i class="fa-solid fa-up-right-from-square"></i></a></li>`;
+                return `<li>
+                    <div class="history-item-details">
+                        <span>${new Date(log.timestamp).toLocaleString()}</span>
+                        <span>Lat: ${log.latitude.toFixed(4)}, Lon: ${log.longitude.toFixed(4)}</span>
+                    </div>
+                    <a href="${mapUrl}" target="_blank" class="btn-map">Open Map &nbsp; <i class="fa-solid fa-up-right-from-square"></i></a>
+                </li>`;
             }).join('');
-            contentDiv.innerHTML = `<div class="location-info"><p><strong>Latest Coordinates:</strong> ${latest.latitude}, ${latest.longitude}</p><p><strong>IP Address:</strong> ${latest.ip_address}</p><p><strong>Battery Status:</strong> ${latest.battery}</p><a href="${googleMapsUrl}" target="_blank" class="btn btn-secondary">Open Latest in Google Maps &nbsp; <i class="fa-solid fa-location-dot"></i></a></div><hr><h4>Location History (Last 10)</h4><ul class="location-history-list">${historyHtml}</ul>`;
+
+            contentDiv.innerHTML = `
+                <div class="location-info">
+                    <p><strong>Latest Coordinates:</strong> ${latest.latitude}, ${latest.longitude}</p>
+                    <p><strong>IP Address:</strong> ${latest.ip_address}</p>
+                    <p><strong>Battery Status:</strong> ${latest.battery}</p>
+                    <a href="${googleMapsUrl}" target="_blank" class="btn btn-secondary">Open Latest in Google Maps &nbsp; <i class="fa-solid fa-location-dot"></i></a>
+                </div>
+                <hr>
+                <h4>Location History</h4>
+                <ul class="location-history-list">
+                    ${historyHtml}
+                </ul>
+            `;
         } else {
             contentDiv.innerHTML = '<p>No location data found for this user.</p>';
         }
